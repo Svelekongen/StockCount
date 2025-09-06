@@ -12,8 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.stockcount.ui.theme.StockCountTheme
+import com.example.stockcount.data.SettingsDataStore
+import com.example.stockcount.data.ScanBuffer
 
 class MainActivity : ComponentActivity() {
+    private val settings by lazy { SettingsDataStore(this) }
+    private val scanBuffer = ScanBuffer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
