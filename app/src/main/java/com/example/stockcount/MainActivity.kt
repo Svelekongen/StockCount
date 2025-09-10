@@ -20,13 +20,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stockcount.ui.theme.StockCountTheme
 import com.example.stockcount.ui.scan.ScanScreen as CameraScanScreen
+import com.example.stockcount.ui.list.ListScreen
+import com.example.stockcount.ui.detail.DetailScreen
+import com.example.stockcount.ui.export.ExportScreen
+import com.example.stockcount.ui.settings.SettingsScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Scan : Screen("scan")
     object List : Screen("list")
-    object Detail : Screen("detail")
+    object Detail : Screen("detail/{ean}") {
+        fun createRoute(ean: String) = "detail/$ean"
+    }
     object Export : Screen("export")
+    object Settings : Screen("settings")
 }
 
 class MainActivity : ComponentActivity() {
@@ -42,9 +49,25 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(Screen.Home.route) { HomeScreen(navController) }
                     composable(Screen.Scan.route) { CameraScanScreen(onBack = { navController.popBackStack() }) }
-                    composable(Screen.List.route) { ListScreen(navController) }
-                    composable(Screen.Detail.route) { DetailScreen(navController) }
-                    composable(Screen.Export.route) { ExportScreen(navController) }
+                    composable(Screen.List.route) { 
+                        ListScreen(
+                            onBack = { navController.popBackStack() },
+                            onItemClick = { ean -> navController.navigate(Screen.Detail.createRoute(ean)) }
+                        ) 
+                    }
+                    composable(Screen.Detail.route) { backStackEntry ->
+                        val ean = backStackEntry.arguments?.getString("ean") ?: ""
+                        DetailScreen(
+                            ean = ean,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable(Screen.Export.route) { 
+                        ExportScreen(onBack = { navController.popBackStack() })
+                    }
+                    composable(Screen.Settings.route) { 
+                        SettingsScreen(onBack = { navController.popBackStack() })
+                    }
                 }
             }
         }
@@ -57,20 +80,42 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Home Screen")
-        Button(onClick = { navController.navigate(Screen.Scan.route) }) {
-            Text("Go to Scan")
+        Text(
+            text = "Enkel Varetelling",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(
+            text = "Rask og pålitelig varetelling for små butikker",
+            style = MaterialTheme.typography.bodyMedium
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Button(
+            onClick = { navController.navigate(Screen.Scan.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Start skanning")
         }
-        Button(onClick = { navController.navigate(Screen.List.route) }) {
-            Text("Go to List")
+        Button(
+            onClick = { navController.navigate(Screen.List.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Se vareliste")
         }
-        Button(onClick = { navController.navigate(Screen.Detail.route) }) {
-            Text("Go to Detail")
+        Button(
+            onClick = { navController.navigate(Screen.Export.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Eksporter til CSV")
         }
-        Button(onClick = { navController.navigate(Screen.Export.route) }) {
-            Text("Go to Export")
+        Button(
+            onClick = { navController.navigate(Screen.Settings.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Innstillinger")
         }
     }
 }
@@ -86,8 +131,8 @@ fun ListScreen(navController: NavController) {
 }
 
 @Composable
-fun DetailScreen(navController: NavController) {
-    PlaceholderScreen("Detail Screen", navController)
+fun DetailScreen(navController: NavController, ean: String) {
+    PlaceholderScreen("Detail Screen for $ean", navController)
 }
 
 @Composable

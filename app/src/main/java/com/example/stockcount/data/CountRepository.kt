@@ -18,6 +18,8 @@ class CountRepository private constructor(
 
     fun search(query: String): Flow<List<CountLine>> = dao.search("%${query.trim()}%")
 
+    suspend fun getItem(ean: String): CountLine? = dao.getByEan(ean)
+
     suspend fun scan(ean: String) {
         require(Ean13.isValid(ean)) { "Invalid EAN-13" }
         val existing = dao.getByEan(ean)
