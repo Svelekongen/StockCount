@@ -61,15 +61,21 @@ fun ScanScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(title = { Text("Skann") }, navigationIcon = {
-                if (onBack != null) {
-                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = null) }
+            TopAppBar(
+                title = { Text("Skann") },
+                navigationIcon = {
+                    if (onBack != null) {
+                        IconButton(onClick = onBack) { 
+                            Icon(Icons.Default.ArrowBack, contentDescription = null) 
+                        }
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { torchEnabled = !torchEnabled }) {
+                        Icon(if (torchEnabled) Icons.Default.FlashOn else Icons.Default.FlashOff, contentDescription = null)
+                    }
                 }
-            }, actions = {
-                IconButton(onClick = { torchEnabled = !torchEnabled }) {
-                    Icon(if (torchEnabled) Icons.Default.FlashOn else Icons.Default.FlashOff, contentDescription = null)
-                }
-            })
+            )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->

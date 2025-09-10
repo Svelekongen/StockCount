@@ -45,7 +45,7 @@ fun DetailScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Rediger vare") },
                 navigationIcon = {
                     if (onBack != null) {

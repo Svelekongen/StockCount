@@ -37,7 +37,7 @@ fun ListScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Vareliste") },
                 navigationIcon = {
                     if (onBack != null) {

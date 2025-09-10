@@ -50,7 +50,7 @@ fun ExportScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Eksporter til CSV") },
                 navigationIcon = {
                     if (onBack != null) {

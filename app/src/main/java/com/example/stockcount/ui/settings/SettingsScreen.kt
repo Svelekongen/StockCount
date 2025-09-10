@@ -23,7 +23,7 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Innstillinger") },
                 navigationIcon = {
                     if (onBack != null) {
