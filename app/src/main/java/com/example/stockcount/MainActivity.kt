@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stockcount.ui.theme.StockCountTheme
+import com.example.stockcount.ui.scan.ScanScreen as CameraScanScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = Screen.Home.route
                 ) {
                     composable(Screen.Home.route) { HomeScreen(navController) }
-                    composable(Screen.Scan.route) { ScanScreen(navController) }
+                    composable(Screen.Scan.route) { CameraScanScreen(onBack = { navController.popBackStack() }) }
                     composable(Screen.List.route) { ListScreen(navController) }
                     composable(Screen.Detail.route) { DetailScreen(navController) }
                     composable(Screen.Export.route) { ExportScreen(navController) }
