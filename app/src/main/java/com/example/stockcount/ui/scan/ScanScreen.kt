@@ -28,6 +28,7 @@ import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.launch
 import com.example.stockcount.data.CountRepository
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanScreen(
     onBack: (() -> Unit)? = null

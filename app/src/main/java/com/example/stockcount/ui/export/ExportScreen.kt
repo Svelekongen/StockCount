@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.stockcount.export.CsvExporter
 import com.example.stockcount.settings.UserSettings
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExportScreen(
     onBack: (() -> Unit)? = null
