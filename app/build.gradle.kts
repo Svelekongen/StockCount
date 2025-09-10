@@ -80,3 +80,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
+// Add Room schema location to fix the warning
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
