@@ -51,8 +51,7 @@ fun ScanScreen(
     var cameraControl by remember { mutableStateOf<CameraControl?>(null) }
 
     var lastScanAt by remember { mutableStateOf(0L) }
-    var lastScannedEan by remember { mutableStateOf<String?>(null) }
-    val debounceMs = 500L
+    val debounceMs = 2000L
 
     val repo = remember { CountRepository.get(context) }
 
@@ -105,7 +104,7 @@ fun ScanScreen(
                         .build()
 
                     val options = BarcodeScannerOptions.Builder()
-                        .setBarcodeFormats(Barcode.FORMAT_EAN_13)
+                        .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
                         .build()
                     val scanner = BarcodeScanning.getClient(options)
 
@@ -117,9 +116,8 @@ fun ScanScreen(
                                 .addOnSuccessListener { barcodes ->
                                     val now = System.currentTimeMillis()
                                     val ean = barcodes.firstOrNull()?.rawValue
-                                    if (ean != null && (now - lastScanAt) >= debounceMs && ean != lastScannedEan) {
+                                    if (ean != null && ean.isNotBlank() && (now - lastScanAt) >= debounceMs) {
                                         lastScanAt = now
-                                        lastScannedEan = ean
                                         scope.launch {
                                             try {
                                                 repo.scan(ean)

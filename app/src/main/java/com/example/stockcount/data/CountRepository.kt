@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.example.stockcount.data.db.AppDatabase
 import com.example.stockcount.data.db.CountLineDao
 import com.example.stockcount.data.entity.CountLine
-import com.example.stockcount.domain.Ean13
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -21,7 +20,7 @@ class CountRepository private constructor(
     suspend fun getItem(ean: String): CountLine? = dao.getByEan(ean)
 
     suspend fun scan(ean: String) {
-        require(Ean13.isValid(ean)) { "Invalid EAN-13" }
+        require(ean.isNotBlank()) { "Invalid barcode" }
         val existing = dao.getByEan(ean)
         val ts = now()
         if (existing == null) {

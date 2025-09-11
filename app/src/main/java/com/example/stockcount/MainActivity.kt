@@ -38,6 +38,7 @@ sealed class Screen(val route: String) {
     }
     object Export : Screen("export")
     object Settings : Screen("settings")
+    object Import : Screen("import")
 }
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +72,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Screen.Settings.route) { 
                         SettingsScreen(onBack = { navController.popBackStack() })
+                    }
+                    composable(Screen.Import.route) {
+                        com.example.stockcount.ui.import.ImportScreen(onBack = { navController.popBackStack() })
                     }
                 }
             }
@@ -120,6 +124,12 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Innstillinger")
+        }
+        Button(
+            onClick = { navController.navigate(Screen.Import.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Importer katalog")
         }
     }
 }

@@ -27,7 +27,6 @@ fun DetailScreen(
     var item by remember { mutableStateOf<CountLine?>(null) }
     var quantity by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
-    var location by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(true) }
     var showSaveDialog by remember { mutableStateOf(false) }
@@ -38,7 +37,7 @@ fun DetailScreen(
             item = loadedItem
             quantity = loadedItem?.quantity?.toString() ?: "0"
             name = loadedItem?.name ?: ""
-            location = loadedItem?.location ?: ""
+            // location removed
             note = loadedItem?.note ?: ""
             isLoading = false
         }
@@ -150,14 +149,7 @@ fun DetailScreen(
                     singleLine = true
                 )
 
-                // Location
-                OutlinedTextField(
-                    value = location,
-                    onValueChange = { location = it },
-                    label = { Text("Lokasjon (valgfritt)") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
+                // Location removed
 
                 // Note
                 OutlinedTextField(
@@ -186,7 +178,6 @@ fun DetailScreen(
                             val updatedItem = item?.copy(
                                 quantity = qty,
                                 name = name.takeIf { it.isNotBlank() },
-                                location = location.takeIf { it.isNotBlank() },
                                 note = note.takeIf { it.isNotBlank() }
                             )
                             if (updatedItem != null) {

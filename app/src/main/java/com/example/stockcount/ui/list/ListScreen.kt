@@ -151,13 +151,7 @@ private fun CountLineItem(
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    item.location?.let { location ->
-                        Text(
-                            text = "📍 $location",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    // location removed
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
